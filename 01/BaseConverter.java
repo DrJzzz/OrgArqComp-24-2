@@ -1,65 +1,89 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class BaseConverter {
+public class BaseConverter{
+public static void main(String[] args){
+	Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    boolean exit = false;
+    while (!exit) {
+        int originalBase = getValidBase(scanner, "Ingresa la base del numero de origen (2, 8, 10, or 16): ");
+        int targetBase = getValidBase(scanner, "Ingresa la base de la salida (2, 8, 10, or 16): ");
 
-        boolean exit = false;
-        while (!exit) {
-            int originalBase = getValidBase(scanner, "Enter the base of the original number (2, 8, 10, or 16): ");
-            int targetBase = getValidBase(scanner, "Enter the base to convert to (2, 8, 10, or 16): ");
+        System.out.print("Ingresa el numero que deseas convertir:");
+        String numberStr = scanner.next();
 
-            // Input the original number as a string
-            System.out.print("Enter the number to convert (in base " + originalBase + "): ");
-            String numberStr = scanner.next();
+        String result = anyToAny(numberStr, originalBase, targetBase);
 
-            // Convert the number to base 10 (if necessary)
-            int decimalNumber = convertToDecimal(numberStr, originalBase);
+        System.out.println(result);
 
-            // Convert the decimal number to the target base
-            String result = convertFromDecimal(decimalNumber, targetBase);
-
-            // Output the result
-            System.out.println("Result: " + result);
-
-            // Ask the user if they want to make another conversion or exit
-            System.out.print("Do you want to make another conversion? (yes/no): ");
-            String choice = scanner.next();
-            if (!choice.equalsIgnoreCase("yes")) {
-                exit = true;
-            }
+        // Ask the user if they want to make another conversion or exit
+        System.out.print("Quieres hacer otra convercion? (si/no): ");
+        String choice = scanner.next();
+        if (!choice.equalsIgnoreCase("si")) {
+            exit = true;
         }
-
-        scanner.close();
-        System.out.println("Goodbye!");
     }
 
-    // Get a valid base from the user
-    private static int getValidBase(Scanner scanner, String message) {
-        int base;
-        do {
+    scanner.close();
+    System.out.println("Terminando programa...");
+}
+
+static int charToInt(char c) {
+	if (c >= '0' && c <= '9') return(int)c - '0';
+	return(int)c - 'A' + 10;
+}
+
+static char intToChar(int num) {
+	if (num >= 0 && num <= 9)
+		return(char)(num + '0');
+	return(char)(num - 10 + 'A');
+}
+
+static int anyToDec(String sNum, int base) {
+	int res = 0;
+	int multiplicador = 1;
+	int len = sNum.length();
+    
+	for(int i=len-1; i>=0; i--) {
+		if (charToInt(sNum.charAt(i)) >= base) {
+			System.out.printf("Error, los digitos deben ser menores a la base");
+			return -1;
+		}
+		res += charToInt(sNum.charAt(i)) * multiplicador;
+		multiplicador = multiplicador * base;
+	}
+	return res;
+}
+
+static String decToAny(int base, int inputNum) {
+	String res = "";
+	while (inputNum > 0) {
+		res += intToChar(inputNum % base);
+		inputNum /= base;
+	}
+    StringBuilder sb = new StringBuilder(res);  
+	return sb.reverse().toString();
+}
+
+static String anyToAny(String s, int a, int b) {
+	int num = anyToDec(s, a);
+	return  decToAny(b, num);
+}
+
+private static int getValidBase(Scanner scanner, String message) {
+    int base;
+    do {
+        System.out.print(message);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Input invalido, solo se aceptan enteros");
             System.out.print(message);
-            while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input! Please enter an integer.");
-                System.out.print(message);
-                scanner.next(); // discard non-integer input
-            }
-            base = scanner.nextInt();
-            if (base != 2 && base != 8 && base != 10 && base != 16) {
-                System.out.println("Invalid base! Please enter 2, 8, 10, or 16.");
-            }
-        } while (base != 2 && base != 8 && base != 10 && base != 16);
-        return base;
-    }
-
-    // Convert a number from any base to base 10
-    private static int convertToDecimal(String numberStr, int base) {
-        return Integer.parseInt(numberStr, base);
-    }
-
-    // Convert a decimal number to any base
-    private static String convertFromDecimal(int decimalNumber, int base) {
-        return Integer.toString(decimalNumber, base);
+            scanner.next();
+        }
+        base = scanner.nextInt();
+        if (base != 2 && base != 8 && base != 10 && base != 16) {
+            System.out.println("Input invalido, la base debe ser 2, 8, 10, o 16.");
+        }
+    } while (base != 2 && base != 8 && base != 10 && base != 16);
+    return base;
     }
 }
