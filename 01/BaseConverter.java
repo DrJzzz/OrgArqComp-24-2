@@ -16,7 +16,6 @@ public static void main(String[] args){
 
         System.out.println(result);
 
-        // Ask the user if they want to make another conversion or exit
         System.out.print("Quieres hacer otra convercion? (si/no): ");
         String choice = scanner.next();
         if (!choice.equalsIgnoreCase("si")) {
