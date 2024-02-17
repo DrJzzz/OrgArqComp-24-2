@@ -1,8 +1,8 @@
 package src;
 import java.util.*;
 
-public class BaseConverter{
-public static void main(String[] args){
+public class BaseConverter {
+public static void main(String[] args) {
 	Scanner scanner = new Scanner(System.in);
 
     boolean exit = false;
