@@ -29,7 +29,7 @@ solo es posible representar cualquier valor exactamente si n es multiplo de m.
 
 Instrucciones para ejecutar:
 Compila el .java usando "javac BaseConverter.java"
-Luego corre el programa con "java BaseConverter" sin argumentos.
+Luego corre el programa con "java src.BaseConverter" (sin argumentos y has esto desde el dir padre).
 Una vez iniciado el programa, este te dira que hacer.
 
 Integrantes:
