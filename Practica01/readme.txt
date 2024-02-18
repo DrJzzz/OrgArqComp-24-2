@@ -34,4 +34,4 @@ Una vez iniciado el programa, este te dira que hacer.
 
 Integrantes:
 Rodolfo Josue Menchaca Carrillo - 315294165
-Violeta Castillo Camacho - 318214328
+Violeta Ardeni Castillo Camacho - 318214328
